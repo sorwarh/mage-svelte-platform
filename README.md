@@ -1,38 +1,75 @@
-# sv
+# Mage–Svelte Platform
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+**Mage–Svelte Platform** is a configurable, headless storefront frontend built with **SvelteKit** for **Adobe Commerce (Magento 2)**.
 
-## Creating a project
+The platform decouples the frontend from Magento and delivers a fast, SEO-friendly user experience using **Cloudflare edge services** such as Workers, KV, and Images.
 
-If you're seeing this, you've probably already done this step. Congrats!
 
-```sh
-# create a new project in the current directory
-npx sv create
+## The storefront focuses on
 
-# create a new project in my-app
-npx sv create my-app
+* Performance
+* Scalability
+* Developer experience
+* Optimized rendering for web and mobile
+
+
+
+## Architecture Goals
+
+* Fully decoupled frontend (headless Magento)
+* Edge-first request handling
+* Optimized server-side rendering (SSR) for SEO
+* CDN-delivered media and assets
+
+
+
+## Data Flow (Example: Product Page)
+
+1. User requests a product page.
+2. The SvelteKit route calls the Worker API.
+3. The Worker checks Cloudflare KV for cached product data.
+4. If there is a cache miss:
+
+   * Fetches product data from Magento GraphQL
+   * Normalizes and stores it in KV
+5. Returns optimized JSON to SvelteKit.
+6. SvelteKit renders the page (SSR + hydration).
+
+
+
+## Technology Stack
+
+### Frontend
+
+* SvelteKit 2
+* Tailwind CSS + DaisyUI
+* Server-side rendering (SSR)
+* Component-based UI
+
+### Edge & Infrastructure
+
+* Cloudflare Workers – API gateway / BFF
+* Cloudflare KV – edge caching
+* Cloudflare Images – product image delivery
+* Cloudflare CDN – static and SSR caching
+
+### Backend
+
+* Adobe Commerce (Magento 2.4+)
+* GraphQL API
+* No Magento theme or frontend rendering
+
+
+
+### Image Delivery
+
+Product images are served through **Cloudflare Images** to provide:
+
+* Automatic resizing
+* WebP / AVIF formats
+* CDN distribution
+* Reduced Magento media load
+
 ```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+Magento Media → Cloudflare Images → Storefront UI
 ```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.

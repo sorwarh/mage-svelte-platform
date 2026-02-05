@@ -1,2 +1,13 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script lang="ts">
+  import DefaultHomepage from "$lib/components/page/DefaultHomepage.svelte";
+  import Homepage from "$lib/components/page/Homepage.svelte";
+
+  let { data } = $props();
+  let { config } = data;
+</script>
+
+{#if config.baseUrl}
+<Homepage />
+{:else}
+  <DefaultHomepage />
+{/if}
