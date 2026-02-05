@@ -3,11 +3,10 @@
   import Homepage from "$lib/components/page/Homepage.svelte";
 
   let { data } = $props();
-  let { config } = data;
 </script>
 
-{#if config.baseUrl}
-<Homepage />
+{#if data.config?.baseUrl}
+  <Homepage />
 {:else}
   <DefaultHomepage />
 {/if}

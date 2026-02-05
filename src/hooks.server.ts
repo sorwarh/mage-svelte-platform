@@ -5,5 +5,6 @@ export async function handle({ event, resolve }) {
         ? { baseUrl }
         : null;
 
+
     return resolve(event);
 }

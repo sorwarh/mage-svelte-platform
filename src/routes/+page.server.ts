@@ -3,6 +3,13 @@ import { gql, GraphQLClient } from 'graphql-request';
 export async function load({ cookies, locals }) {
 	//     Return data to the page on that rote
 
+	if (!locals.config?.baseUrl) {
+		return {
+			categoryList: null,
+			locals: locals,
+			config: null
+		};
+	}
 	const graphqlClient = new GraphQLClient(locals.config.baseUrl, { headers: {} });
 	// const query = gql`query {
 	// 					products(

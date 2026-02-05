@@ -8,7 +8,6 @@
   const products = categoryData.products.items;
   const pageInfo = categoryData.products.page_info;
 
-  console.log(products);
 </script>
 
 <section
