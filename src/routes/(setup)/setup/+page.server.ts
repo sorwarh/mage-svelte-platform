@@ -1,5 +1,10 @@
 import { redirect, fail } from '@sveltejs/kit';
 
+export function load({ cookies }) {
+    const baseUrl = cookies.get('magento_base_url');
+    return { config: { baseUrl } };
+}
+
 export const actions = {
     default: async ({ request, cookies }) => {
         const data = await request.formData();

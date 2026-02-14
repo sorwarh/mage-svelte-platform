@@ -1,8 +1,7 @@
 <script lang="ts">
-  import favicon from "$lib/assets/favicon.svg";
+  import favicon from "$lib/assets/favicon.ico";
   import NavCategoryList from "$lib/components/header/NavCategoryList.svelte";
-  import "../app.css";
-
+  import "../../app.css";
   let { children, data } = $props();
   const { categoryList, locals } = data;
 </script>
