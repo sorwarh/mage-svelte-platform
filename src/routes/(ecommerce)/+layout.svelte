@@ -9,101 +9,76 @@
 <svelte:head>
   <link rel="icon" href={favicon} />
 </svelte:head>
-<header>
-  <div class="navbar bg-base-100 shadow-sm">
-    <!-- LEFT: Logo + Mobile Menu -->
-    <div class="navbar-start">
-      <!-- Mobile menu button -->
-      <div class="dropdown lg:hidden">
-        <div tabindex="0" role="button" class="btn btn-ghost btn-circle">☰</div>
-        <ul
-          tabindex="0"
-          class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-        >
-          <NavCategoryList {categoryList} />
-        </ul>
-      </div>
+<header class="sticky top-0 z-50 bg-base-100 shadow">
+	<!-- TOP BAR -->
+	<div class="navbar container mx-auto px-4">
+		<!-- LEFT: Logo + Mobile Menu -->
+		<div class="navbar-start gap-2">
+			<div class="dropdown lg:hidden">
+				<button class="btn btn-ghost btn-circle">
+					☰
+				</button>
+				<ul class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-64">
+					<NavCategoryList {categoryList} />
+				</ul>
+			</div>
 
-      <a
-        href="/"
-        title="Homepage"
-        class="btn btn-ghost text-2xl
-         bg-gradient-to-r from-orange-500 via-red-500 to-red-700
-         text-white font-bold
-         hover:from-red-700 hover:via-red-500 hover:to-orange-500
-         transition-all duration-300"
-      >
-        MageSvelte
-      </a>
-    </div>
+			<a
+				href="/"
+				class="text-xl font-extrabold tracking-tight
+				bg-gradient-to-r from-orange-500 via-red-500 to-red-700
+				bg-clip-text text-transparent"
+			>
+				MageSvelte
+			</a>
+		</div>
 
-    <!-- CENTER: Desktop Nav -->
-    <nav class="navbar-center hidden lg:flex">
-      <NavCategoryList {categoryList} />
-    </nav>
+		<!-- CENTER: SEARCH -->
+		<div class="navbar-center hidden lg:flex w-full max-w-xl">
+			<div class="join w-full">
+				<input
+					type="search"
+					placeholder="Search products, brands, categories…"
+					class="input input-bordered join-item w-full"
+				/>
+				<button class="btn btn-primary join-item">
+					🔍
+				</button>
+			</div>
+		</div>
 
-    <!-- RIGHT: Icons -->
-    <div class="navbar-end gap-2">
-      <!-- Cart -->
-      <div class="dropdown dropdown-end">
-        <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
-          <div class="indicator">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5
-                   M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17
-                   m0 0a2 2 0 100 4 2 2 0 000-4
-                   m-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-              />
-            </svg>
-            <span class="badge badge-sm indicator-item">0</span>
-          </div>
-        </div>
+		<!-- RIGHT: ACTIONS -->
+		<div class="navbar-end gap-2">
+			<button class="btn btn-ghost btn-circle">
+				🛒
+			</button>
 
-        <div
-          class="card card-compact dropdown-content bg-base-100 z-[1] mt-3 w-52 shadow"
-        >
-          <div class="card-body">
-            <span class="text-lg font-bold">0 Item</span>
-            <span class="text-info">Subtotal: 0</span>
-            <div class="card-actions">
-              <button class="btn btn-primary btn-block">View cart</button>
-            </div>
-          </div>
-        </div>
-      </div>
+			<div class="dropdown dropdown-end">
+				<button class="btn btn-ghost btn-circle avatar">
+					<div class="w-9 rounded-full">
+						<img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+					</div>
+				</button>
+				<ul class="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow">
+					<li><a>Profile</a></li>
+					<li><a>Orders</a></li>
+					<li><a>Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 
-      <!-- User -->
-      <div class="dropdown dropdown-end">
-        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-          <div class="w-10 rounded-full">
-            <img
-              alt="User avatar"
-              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-            />
-          </div>
-        </div>
-        <ul
-          tabindex="0"
-          class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-        >
-          <li><a>Profile</a></li>
-          <li><a>Settings</a></li>
-          <li><a>Logout</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
+	<!-- CATEGORY BAR -->
+	<nav class="hidden lg:block border-t border-base-200">
+		<div class="container mx-auto px-4">
+			<ul class="flex justify-center gap-6 overflow-x-auto whitespace-nowrap py-3 scrollbar-hide">
+				<NavCategoryList {categoryList} />
+			</ul>
+		</div>
+	</nav>
 </header>
+
+
 
 <main class="content">
   {@render children()}

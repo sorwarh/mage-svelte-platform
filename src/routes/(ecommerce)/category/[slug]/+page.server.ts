@@ -3,8 +3,10 @@ import type { PageServerLoad } from './$types';
 import { GraphQLClient, gql } from 'graphql-request';
 
 export const load: PageServerLoad = async ({ params, locals, setHeaders, url }) => {
+  // s-maxage=3600 caches the page on the CDN for 1 hour
+  // stale-while-revalidate=600 serves old content for 10 mins while fetching new data in background
   setHeaders({
-    'cache-control': 'no-store'
+    'cache-control': 'public, s-maxage=3600, stale-while-revalidate=600'
   });
 
   if (!params.slug) {
@@ -65,14 +67,12 @@ export const load: PageServerLoad = async ({ params, locals, setHeaders, url }) 
     pageSize: 24,
     currentPage: page
   };
-
   const data = await graphqlClient.request(gqlQuery, variables);
 
   if (!data.categories.items.length) {
     throw error(404, 'Category not found');
   }
-
   return {
-    categoryData: data.categories.items[0]
+    categoryData: data.categories.items[0],
   };
 };
