@@ -1,4 +1,4 @@
-name: CI
+name: CI + Deploy to CF Workers
 
 on:
   push:
@@ -6,7 +6,8 @@ on:
   pull_request:
 
 jobs:
-  build:
+  ci:
+    name: Quality Checks
     runs-on: ubuntu-latest
 
     steps:
@@ -17,15 +18,22 @@ jobs:
           node-version: 20
 
       - run: npm ci
-
-      # Lint
-      - run: npx eslint .
-
-      # Format check
+      - run: npm run lint
       - run: npx prettier --check .
-
-      # Tests
+      - run: npm audit --audit-level=high
       - run: npm run test --if-present
 
-      # Security audit
-      - run: npm audit --audit-level=high
+  deploy:
+    name: Deploy to Cloudflare
+    needs: ci   # 👈 THIS LINE is the key
+    runs-on: ubuntu-latest
+
+    if: github.ref == 'refs/heads/main'  # only deploy main
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: npm ci
+      - run: npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
